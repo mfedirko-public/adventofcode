@@ -34,18 +34,4 @@ public class Rule {
         }
         return firstValid ^ secondValid;
     }
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Rule rule = (Rule) o;
-        return letter == rule.letter &&
-                minOccurs == rule.minOccurs &&
-                maxOccurs == rule.maxOccurs;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(letter, minOccurs, maxOccurs);
-    }
 }
