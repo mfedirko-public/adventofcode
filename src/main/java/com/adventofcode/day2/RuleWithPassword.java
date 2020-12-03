@@ -1,4 +1,4 @@
-package com.adventofcode;
+package com.adventofcode.day2;
 
 public class RuleWithPassword extends Rule {
     public final String password;

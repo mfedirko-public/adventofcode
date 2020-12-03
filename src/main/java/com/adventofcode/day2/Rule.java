@@ -1,4 +1,4 @@
-package com.adventofcode;
+package com.adventofcode.day2;
 
 import java.util.Objects;
 
