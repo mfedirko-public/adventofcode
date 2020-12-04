@@ -28,10 +28,7 @@ public class Tobbogan {
             }
             if (line != null) {
                 char[] terrainSymbols = line.toCharArray();
-                this.x = this.x + slope.dx;
-                if (terrainSymbols.length <= this.x) {
-                    this.x = this.x % terrainSymbols.length;
-                }
+                this.x = (this.x + slope.dx) % terrainSymbols.length;
                 char symbol = terrainSymbols[this.x];
                 Terrain terrain = Terrain.fromSymbol(symbol);
                 System.out.printf("%s at (%d, %d)\n", terrain, x, y);
