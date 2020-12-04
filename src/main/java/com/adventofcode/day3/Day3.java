@@ -1,7 +1,10 @@
 package com.adventofcode.day3;
 
+import com.adventofcode.FileStreamSupport;
+
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Day3 {
     public static void main(String[] args) throws IOException {
@@ -16,18 +19,21 @@ public class Day3 {
         System.out.printf("Tree count pt2: %d\n", multiple);
     }
 
-    private static int getTreeCount(Slope slope) throws IOException {
+    private static long getTreeCount(Slope slope) throws IOException {
         InputStream map = Day3.class.getResourceAsStream("/day3.txt");
-        Tobbogan tobbogan = new Tobbogan(map, slope);
-        int treeCount = 0;
-        Tobbogan.Terrain terrain;
-        do {
-            terrain = tobbogan.next();
-            if (terrain == Tobbogan.Terrain.TREE) {
-                treeCount++;
-            }
-        } while (terrain != null);
-        return treeCount;
+        AtomicInteger x = new AtomicInteger(0);
+        AtomicInteger y = new AtomicInteger(0); // start at 0
+        return FileStreamSupport.toStream(map)
+                .map(String::toCharArray)
+                .filter(chs -> {
+                    int indexY = y.getAndIncrement();
+                    if (indexY % slope.dy != 0) return false;
+                    int indexX = x.getAndAdd(slope.dx) % chs.length;
+                    Terrain terrain = Terrain.fromSymbol(chs[indexX]);
+                    return terrain == Terrain.TREE;
+                })
+                .count();
+
     }
 
 
