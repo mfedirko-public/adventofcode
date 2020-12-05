@@ -14,15 +14,13 @@ public class Day5 {
         FileStreamSupport.toStream(file, 5000)
                 .map(line -> new BoardingPass(line).getSeatID())
                 .sorted()
-                .reduce(0,
-                    (sum, id) -> {
+                .forEach(id -> {
                        if (lastSeatID.get() > -1) {
                             if (id - lastSeatID.get() > 1) {
                                 missingSeatID.set(id - 1);
                             }
                        }
                        lastSeatID.set(id);
-                       return lastSeatID.get();
                     });
         System.out.printf("Max Seat ID: %d\nMissing Seat ID: %d\n", lastSeatID.get(), missingSeatID.get());
     }
