@@ -7,8 +7,6 @@ public class Sums {
     private int[] twoSum;
     private int[] threeSum;
     private Set<Integer> numbers = new HashSet<>();
-    private Set<Long> sums = new HashSet<>();
-    private long lastSum = 0L;
     public Sums(int requiredSum) {
         this.requiredSum = requiredSum;
     }
@@ -23,8 +21,6 @@ public class Sums {
         if (threeSum == null) {
             checkThreeSum(value);
         }
-        long sum = lastSum + value;
-        sums.add(sum);
     }
     public int[] getTwoSum() {
         return twoSum;
