@@ -31,10 +31,9 @@ public class Day8 {
 
     private static Integer runFeed(StreamFeed feed, AtomicInteger accumulator) throws InfiniteLoopException {
         accumulator.set(0);
-        Commands commands = new Commands();
         while (feed.hasNext()) {
             feed.moveFeed(1);
-            commands.execute(feed, accumulator);
+            Commands.execute(feed, accumulator);
         }
         return accumulator.get();
     }
