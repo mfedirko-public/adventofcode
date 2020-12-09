@@ -12,7 +12,7 @@ public class Commands  {
         COMMANDS.put("jmp", (in, cf, ac) -> cf.moveFeed(in - 1));
     }
 
-    public static void execute(CommandFeed feed, AtomicInteger accumulator) {
+    public static void execute(StreamFeed feed, AtomicInteger accumulator) {
         String[] cmdWithArg = feed.consume().split("\\s");
         String cmd = cmdWithArg[0];
         int arg = Integer.parseInt(cmdWithArg[1]);
