@@ -28,17 +28,13 @@ public class Day10 {
                         onesStreak.incrementAndGet();
                     } else {
                         int streak = onesStreak.get();
-                        if (streak > 1) {
-                            configurations.set(configurations.get() * getConfigurationsCount(streak));
-                        }
+                        configurations.set(configurations.get() * getConfigurationsCount(streak));
                         onesStreak.set(0);
                     }
                     return next;
                 });
         int streak = onesStreak.get();
-        if (streak > 1) {
-            configurations.set(configurations.get() * getConfigurationsCount(streak));
-        }
+        configurations.set(configurations.get() * getConfigurationsCount(streak));
         diffsCount.put(3, diffsCount.getOrDefault(3, 0) + 1);
         System.out.printf("Pt 1: %d\n",diffsCount.getOrDefault(3, 0) * diffsCount.getOrDefault(1, 0));
         System.out.printf("Pt 2: %d\n", configurations.get());
