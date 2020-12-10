@@ -40,15 +40,11 @@ public class Day10 {
         System.out.printf("Pt 2: %d\n", configurations.get());
     }
 
+    // https://en.wikipedia.org/wiki/Lazy_caterer%27s_sequence
     private static long getConfigurationsCount(int streak) {
         if (streak == 0) return 1;
-        if (streak == 1) return 1;
-
-        long next = 1;
-        for (int i = 1; i < streak; i++) {
-            next = next + i;
-        }
-        return next;
+        streak = streak - 1;
+        return (streak * streak + streak + 2) / 2;
     }
 
 
