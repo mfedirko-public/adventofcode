@@ -21,16 +21,8 @@ public class Day10 {
                 .mapToInt(Integer::parseInt)
                 .sorted()
                 .reduce(0, (prev, next) -> {
-                    int diff = next - prev;
-                    int existingCount = diffsCount.getOrDefault(diff, 0);
-                    diffsCount.put(diff, existingCount + 1);
-                    if (diff == 1) {
-                        onesStreak.incrementAndGet();
-                    } else {
-                        int streak = onesStreak.get();
-                        configurations.set(configurations.get() * getConfigurationsCount(streak));
-                        onesStreak.set(0);
-                    }
+                    reducePart1(prev, next, diffsCount);
+                    reducePart2(prev, next, onesStreak, configurations);
                     return next;
                 });
         int streak = onesStreak.get();
@@ -42,10 +34,23 @@ public class Day10 {
 
     // https://en.wikipedia.org/wiki/Lazy_caterer%27s_sequence
     private static long getConfigurationsCount(int streak) {
-        if (streak == 0) return 1;
-        streak = streak - 1;
+        streak = streak - 1; // only inner part of cluster can be changed - exclude last/first number
         return (streak * streak + streak + 2) / 2;
     }
 
+    private static void reducePart1(int prev, int next, Map<Integer, Integer> diffsCount) {
+        int diff = next - prev;
+        int existingCount = diffsCount.getOrDefault(diff, 0);
+        diffsCount.put(diff, existingCount + 1);
+    }
+    private static void reducePart2(int prev, int next, AtomicInteger onesStreak, AtomicLong configurations) {
+        if (next - prev == 1) {
+            onesStreak.incrementAndGet();
+        } else {
+            int streak = onesStreak.get();
+            configurations.set(configurations.get() * getConfigurationsCount(streak));
+            onesStreak.set(0);
+        }
+    }
 
 }
