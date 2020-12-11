@@ -25,9 +25,11 @@ public class Day10 {
                     reducePart2(prev, next, onesStreak, configurations);
                     return next;
                 });
-        int streak = onesStreak.get();
-        configurations.set(configurations.get() * getConfigurationsCount(streak));
-        diffsCount.put(3, diffsCount.getOrDefault(3, 0) + 1);
+        // always diff of 3 at the end
+        reducePart1(-3, 0, diffsCount);
+        // handle case when sequence does not end with diff 3
+        reducePart2(0, 0, onesStreak, configurations);
+
         System.out.printf("Pt 1: %d\n",diffsCount.getOrDefault(3, 0) * diffsCount.getOrDefault(1, 0));
         System.out.printf("Pt 2: %d\n", configurations.get());
     }
