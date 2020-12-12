@@ -29,20 +29,11 @@ public class Day12 {
                             pt2.forwardToWaypt(num);
                             break;
                         case 'E':
-                            pt1.east(num, pt1.pos);
-                            pt2.east(num, pt2.waypoint);
-                            break;
                         case 'W':
-                            pt1.west(num, pt1.pos);
-                            pt2.west(num, pt2.waypoint);
-                            break;
                         case 'S':
-                            pt1.south(num, pt1.pos);
-                            pt2.south(num, pt2.waypoint);
-                            break;
                         case 'N':
-                            pt1.north(num, pt1.pos);
-                            pt2.north(num, pt2.waypoint);
+                            Direction.valueOf("" +instr).translate(num, pt1.pos);
+                            Direction.valueOf("" +instr).translate(num, pt2.waypoint);
                             break;
                     }
                 });
@@ -52,15 +43,37 @@ public class Day12 {
     }
 
     private enum Direction {
-        E(0),
-        S(90),
-        W(180),
-        N(270);
+        E(0) {
+            @Override
+            void translate(int num, Point pos) {
+                pos.translate(num, 0);
+            }
+        },
+        S(90) {
+            @Override
+            void translate(int num, Point pos) {
+                pos.translate(0, num);
+            }
+        },
+        W(180) {
+            @Override
+            void translate(int num, Point pos) {
+                pos.translate(-num, 0);
+            }
+        },
+        N(270) {
+            @Override
+            void translate(int num, Point pos) {
+                pos.translate(0, -num);
+            }
+        };
 
         private int angleDeg;
         Direction(int angleDeg) {
             this.angleDeg = angleDeg;
         }
+
+        abstract void translate(int num, Point pos);
 
         public Direction turn(int angleDeg) {
             int angle = this.angleDeg + angleDeg;
@@ -118,32 +131,7 @@ public class Day12 {
             this.pos.y += num * waypoint.y;
         }
         private void forward(int num) {
-            switch (dir) {
-                case E:
-                    east(num, pos);
-                    break;
-                case N:
-                    north(num, pos);
-                    break;
-                case S:
-                    south(num, pos);
-                    break;
-                case W:
-                    west(num, pos);
-                    break;
-            }
-        }
-        void east(int num, Point pos) {
-            pos.translate(num, 0);
-        }
-        void south(int num, Point pos) {
-            pos.translate(0, num);
-        }
-        void west(int num, Point pos) {
-            pos.translate(-num, 0);
-        }
-        void north(int num, Point pos) {
-            pos.translate(0, -num);
+            dir.translate(num, pos);
         }
 
 
