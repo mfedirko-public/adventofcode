@@ -50,7 +50,6 @@ public class Day13 {
         InputStream file = Day13.class.getResourceAsStream("/day13.txt");
         AtomicInteger currentRem = new AtomicInteger(0);
         List<NumSet> numSets = new ArrayList<>();
-        AtomicLong mod = new AtomicLong(1);
         FileStreamSupport.toStream(file)
                 .skip(1)
                 .forEach(line -> {
@@ -59,14 +58,12 @@ public class Day13 {
                                 if (!str.equals("x")) {
                                     NumSet ns = new NumSet(Integer.parseInt(str), currentRem.get());
                                     numSets.add(ns);
-                                    mod.set(mod.get() * ns.mod);
                                 }
                                 currentRem.incrementAndGet();
                             });
 
                 });
         numSets.sort(Comparator.comparing((NumSet ns) -> ns.mod).reversed());
-
         long n = find(numSets);
         System.out.printf("Pt2: %d\n", n);
     }
