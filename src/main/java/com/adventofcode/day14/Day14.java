@@ -54,22 +54,19 @@ public class Day14 {
         }
 
         long apply(long n) {
-            long onesMask = mask;
             long zerosMask = ~mask ^ nonMask; // XXXX10010 -> 000001101
-
-            n = n | onesMask;
+            n = n | mask;
             n = ~(~n | zerosMask);
             return n;
         }
 
-        List<Long> applyV2(long n) {
+        Set<Long> applyV2(long n) {
             n = n | mask;
             long rem = nonMask;
             long xMask = Long.highestOneBit(rem);
             Set<Long> addrs = new HashSet<>();
             addrs.add(n);
-            Set<Long> vals = applyV2(xMask, rem, addrs);
-            return new ArrayList<>(vals);
+            return applyV2(xMask, rem, addrs);
         }
 
         private Set<Long> applyV2(long xMask, long rem, Set<Long> addrs) {
