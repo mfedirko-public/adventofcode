@@ -83,7 +83,7 @@ public class Day14 {
                 xMask = Long.highestOneBit(other);
                 rem = other;
 
-                addrs.addAll(applyV2(xMask, rem, next));
+                next.addAll(applyV2(xMask, rem, next));
             }
             return next;
         }
