@@ -53,11 +53,10 @@ class Expression {
     }
 
     private void process(char c) {
+        final int origlGroupDepth = groupingDepth;
         if (c == '(') {
             if (groupingDepth == 0) {
                 nestedExpressionBuilder = new StringBuilder();
-            } else {
-                nestedExpressionBuilder.append(c);
             }
             groupingDepth++;
         } else if (c == ')') {
@@ -65,12 +64,12 @@ class Expression {
             if (groupingDepth == 0) {
                 String expr = nestedExpressionBuilder.toString();
                 nums.addLast(() -> new Expression(expr, usePrecedence).eval());
-            } else {
-                nestedExpressionBuilder.append(c);
             }
-        } else if (groupingDepth > 0) {
+        }
+
+        if (origlGroupDepth > 0) {
             nestedExpressionBuilder.append(c);
-        } else {
+        } else if (groupingDepth == 0) {
             if (c >= '0' && c <= '9') {
                 numBuilder.append(c);
             } else if ((c == ' ') && numBuilder.length() > 0) {
