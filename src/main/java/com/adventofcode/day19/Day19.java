@@ -92,12 +92,15 @@ public class Day19 {
                 if (!(c >= '0' && c <= '9') || !it.hasNext()) {
                     if (currentNum.length() > 0) {
                         int index = Integer.parseInt(currentNum.toString());
-                        regexBuilder.append(lazyRegexes.get(index).get());
+                        String evaluatedSubRegex = lazyRegexes.get(index).get();
+                        lazyRegexes.put(index, () -> evaluatedSubRegex);
+                        regexBuilder.append(evaluatedSubRegex);
                         currentNum.setLength(0);
                     }
                 }
             }
-            regexBuilder.insert(0, "(").append(")");
+            if (regexBuilder.length() > 1)
+                regexBuilder.insert(0, "(").append(")");
             return regexBuilder.toString();
         }
     }
@@ -113,9 +116,10 @@ public class Day19 {
 
         @Override
         public String get() {
-            if (callCount++ < maxCalls)
+            if (callCount++ != maxCalls)
                 return delegate.get();
-            return ""; // break the infinite loop
+            else
+                return ""; // break the infinite loop
         }
     }
 }
